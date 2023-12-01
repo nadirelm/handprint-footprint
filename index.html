@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="resources/style/stepform.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" ></script>
+</head>
+<body>
+
+<div class="form-wrap">
+    <form id="SignupForm" action="">
+        <fieldset>
+            <legend> Bedrijfs informatie</legend>
+
+            <div class="middle">
+                <label>
+                    <input type="radio" name="radio" checked/>
+                    <div class="front-end box">
+                        <span>Drive</span>
+                        <h4>Vaker dan 80%</h4>
+                    </div>
+                </label>
+
+                <label>
+                    <input type="radio" name="radio"/>
+                    <div class="back-end box">
+                        <span>Public transport</span>
+                        <h4>Vaker dan 80%</h4>
+                    </div>
+                </label>
+
+                <label>
+                    <input type="radio" name="radio"/>
+                    <div class="back-end box">
+                        <span>Walk</span>
+                        <h4>Vaker dan 80%</h4>
+                    </div>
+                </label>
+
+            </div>
+
+            <label for="Bedrijfsnaam">Bedrijfsnaam</label>
+            <input id="Bedrijfsnaam" type="text" />
+            <label for="Email">Email</label>
+            <input id="Email" type="text" />
+            <label for="businessType">Bedrijfstype:</label>
+            <select id="businessType" name="businessType">
+                <option value="A">Winkel</option>
+                <option value="B">Restaurant of voedselservice</option>
+                <option value="C">Fitness- of wellnesscentrum</option>
+                <option value="D">Autoreparatiebedrijf</option>
+                <option value="E">Bouw- of verbouwingsbedrijf</option>
+                <option value="F">Technologie- of elektronicawinkel</option>
+                <option value="G">Outdoor avontuur of sportuitrusting</option>
+                <option value="H">Boekwinkel of uitgeverij</option>
+                <option value="I">Gezondheids- en wellnessdiensten (bijv. spa, salon)</option>
+                <option value="J">Hobbywinkel of ambachtswinkel</option>
+                <option value="K">Dierenwinkel of dierendiensten</option>
+                <option value="L">Tuincentrum of kwekerij</option>
+                <option value="M">Muziek- of entertainmentlocatie</option>
+                <option value="N">Reisbureau of toerisme</option>
+                <option value="O">Woninginrichting of keukenbenodigdheden</option>
+                <option value="P">Gemeenschapsdienst of non-profitorganisatie</option>
+                <option value="Anders">Anders (specificeer alstublieft)</option>
+            </select>
+
+            <label for="areaType">Bedrijfslocatie:</label>
+            <select id="areaType" name="areaType">
+                <option value="A">Stadsgebied</option>
+                <option value="B">Voorstedelijk gebied</option>
+                <option value="C">Landelijk gebied</option>
+            </select>
+
+            <label for="onlinePresence">Online Aanwezigheid</label>
+            <select id="onlinePresence" name="onlinePresence">
+                <option value="A">Ja, we hebben een sterke online aanwezigheid</option>
+                <option value="B">Ja, maar het kan worden verbeterd</option>
+                <option value="C">Nee, we hebben geen online aanwezigheid</option>
+            </select>
+
+            <label for="audience">Wie is uw voornaamste doelgroep?</label>
+            <select id="audience" name="audience">
+                <option value="A">Lokale bewoners</option>
+                <option value="B">Toeristen of bezoekers</option>
+                <option value="C">Een mix van beide</option>
+            </select>
+
+            <label for="sustainability">Geeft uw bedrijf prioriteit aan duurzaamheid?</label>
+            <select id="sustainability" name="sustainability">
+                <option value="A">Ja, we geven prioriteit aan duurzaamheid</option>
+                <option value="B">We hebben enkele duurzaamheidsinitiatieven</option>
+                <option value="C">Nee, duurzaamheid is geen focus</option>
+            </select>
+
+            <label for="communityInvolvement">Is uw bedrijf betrokken bij lokale evenementen en initiatieven?</label>
+            <select id="communityInvolvement" name="communityInvolvement">
+                <option value="A">Ja, we ondersteunen actief lokale evenementen en initiatieven</option>
+                <option value="B">Af en toe nemen we deel aan gemeenschapsactiviteiten</option>
+                <option value="C">Nee, we zijn niet betrokken bij de lokale gemeenschap</option>
+            </select>
+
+
+        </fieldset>
+
+        <fieldset>
+            <legend> Personeel</legend>
+            <label for="employeeCount">Personeel:</label>
+            <select id="employeeCount" name="employeeCount">
+                <option value="A">1-5 werknemers</option>
+                <option value="B">6-20 werknemers</option>
+                <option value="C">21-50 werknemers</option>
+                <option value="D">Meer dan 50 werknemers</option>
+            </select>
+        </fieldset>
+
+        <fieldset>
+            <legend> stapje 3</legend>
+
+        </fieldset>
+
+        <fieldset>
+            <legend> Stapje 4</legend>
+
+        </fieldset>
+
+        <p>
+            <input id="SaveAccount" type="button" value="Submit form" />
+        </p>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#SignupForm").formToWizard({ submitButton: 'SaveAccount' })
+    });
+
+
+    (function($) {
+        $.fn.formToWizard = function(options) {
+            options = $.extend({
+                submitButton: ""
+            }, options);
+
+            let element = this;
+
+            let steps = $(element).find("fieldset");
+            let count = steps.size();
+            let submmitButtonName = "#" + options.submitButton;
+            $(submmitButtonName).hide();
+
+            // 2
+            $(element).before("<ul id='steps'></ul>");
+
+            steps.each(function(i) {
+                $(this).wrap("<div id='step" + i + "'></div>");
+                $(this).append("<p id='step" + i + "commands'></p>");
+
+                // 2
+                let name = $(this).find("legend").html();
+                $("#steps").append("<li id='stepDesc" + i + "'>Step " + (i + 1) + "<span>" + name + "</span></li>");
+
+                if (i == 0) {
+                    createNextButton(i);
+                    selectStep(i);
+                }
+                else if (i == count - 1) {
+                    $("#step" + i).hide();
+                    createPrevButton(i);
+                }
+                else {
+                    $("#step" + i).hide();
+                    createPrevButton(i);
+                    createNextButton(i);
+                }
+            });
+
+            function createPrevButton(i) {
+                let stepName = "step" + i;
+                $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Prev' class='prev'>Back</a>");
+
+                $("#" + stepName + "Prev").bind("click", function(e) {
+                    $("#" + stepName).hide();
+                    $("#step" + (i - 1)).show();
+                    $(submmitButtonName).hide();
+                    selectStep(i - 1);
+                });
+            }
+
+            function createNextButton(i) {
+                let stepName = "step" + i;
+                $("#" + stepName + "commands").append("<a href='#' id='" + stepName + "Next' class='next'>Next</a>");
+
+                $("#" + stepName + "Next").bind("click", function(e) {
+                    $("#" + stepName).hide();
+                    $("#step" + (i + 1)).show();
+                    if (i + 2 == count)
+                        $(submmitButtonName).show();
+                    selectStep(i + 1);
+                });
+            }
+
+            function selectStep(i) {
+                $("#steps li").removeClass("current");
+                $("#stepDesc" + i).addClass("current");
+            }
+
+        }
+    })(jQuery);
+
+</script>
+</body>
+</html>
